@@ -21,10 +21,24 @@ public class IntentReaderActivity extends Activity {
 		return text;
 	}
 	
+	public TextView getView() {
+		return (TextView)findViewById(R.id.intentText);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intent_reader);
+		// get the intent that started the activity
+		Intent intent = getIntent();
+		if (intent.getStringExtra(TEXT_KEY) != null) {
+			text = intent.getStringExtra(TEXT_KEY);
+		} else {
+			text = "No message found!";
+		}
+		mode = intent.getIntExtra(TRANSFORM_KEY, NORMAL);
+		text = transformText(text);
+		getView().setText(text);
 	}
 	
 	public String transformText(String text) {
